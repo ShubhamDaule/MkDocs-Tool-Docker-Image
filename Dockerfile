@@ -1,21 +1,18 @@
-# Use an official Python runtime as the base image
+# Use the official Python base image
 FROM python:3.9
 
-# Set the working directory in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Install Mkdocs and any required dependencies
+# Copy the requirements file and install dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entrypoint script into the container
-COPY mkdockerize.sh .
+# Copy the project files into the container
+COPY . .
 
-# Make the entrypoint script executable
-RUN chmod +x mkdockerize.sh
-
-# Expose port 8000 for Mkdocs to serve the website
+# Expose the default Mkdocs serve port
 EXPOSE 8000
 
-# Set the entrypoint command to the wrapper script
-ENTRYPOINT ["./mkdockerize.sh"]
+# Set the default command to run when the container starts
+CMD ["mkdocs", "serve", "--dev-addr=0.0.0.0:8000"]
