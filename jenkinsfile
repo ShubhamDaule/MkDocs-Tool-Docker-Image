@@ -5,14 +5,14 @@ pipeline {
     stage('Build') {
       steps {
         git 'https://github.com/your-github-repo.git'
-        sh 'docker build -t your-docker-image-name .'
+        sh 'docker build -t <your-docker-image-name> .'
       }
     }
 
     stage('Test') {
       steps {
-        sh 'docker run --rm -v "/path/to/mkdocs/project:/app" your-docker-image-name produce'
-        sh 'docker run -it --rm -v "path/to/mkdocs/project:/app" -p 8000:8000 your-docker-image-name serve'
+        sh 'docker run --rm -v "<local-project-directory>:/app" <your-docker-image-name> produce'
+        sh 'docker run -it --rm -v "<local-project-directory>:/app" -p 8000:8000 <your-docker-image-name> serve'
         // Add any necessary tests or validation steps here
       }
     }
