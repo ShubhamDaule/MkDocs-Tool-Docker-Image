@@ -1,0 +1,5 @@
+# Ignore myproject directory
+myproject/
+
+# Ignore .tar.gz files
+*.tar.gz

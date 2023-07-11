@@ -1,22 +1,26 @@
 #!/bin/bash
 
+PROJECT_NAME="myproject"
+SITE_ARCHIVE="/app/site.tar.gz"
+TEMP_DIR="/tmp/mkdocs_site"
+
 if [[ "$1" == "produce" ]]; then
   # Produce the website
 
   # Change to the project directory
-  cd myproject
+  cd "$PROJECT_NAME"
 
   # Build the Mkdocs site
   mkdocs build
 
   # Create a tar.gz archive of the generated site
-  tar -czvf ../site.tar.gz .
+  tar -czvf "$SITE_ARCHIVE" .
 
   # Check if the site.tar.gz file was created successfully
   if [[ $? -eq 0 ]]; then
     echo "Website production completed successfully."
   else
-    echo "Failed to create the site.tar.gz archive."
+    echo "Failed to create the $SITE_ARCHIVE archive."
     exit 1
   fi
 
@@ -24,18 +28,19 @@ elif [[ "$1" == "serve" ]]; then
   # Serve the website
 
   # Extract the site.tar.gz file to a temporary directory
-  tar -xzvf site.tar.gz --directory /tmp
+  mkdir -p "$TEMP_DIR"
+  tar -xzvf "$SITE_ARCHIVE" --directory "$TEMP_DIR"
 
   # Check if the extraction was successful
   if [[ $? -eq 0 ]]; then
     echo "Website files extracted successfully."
   else
-    echo "Failed to extract the site.tar.gz archive."
+    echo "Failed to extract the $SITE_ARCHIVE archive."
     exit 1
   fi
 
   # Change to the temporary directory
-  cd /tmp
+  cd "$TEMP_DIR"
 
   # Serve the site using Mkdocs on port 8000
   mkdocs serve -a 0.0.0.0:8000
