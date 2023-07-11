@@ -4,9 +4,7 @@ PROJECT_NAME="myproject"
 SITE_ARCHIVE="/app/site.tar.gz"
 TEMP_DIR="/tmp/mkdocs_site"
 
-if [[ "$1" == "produce" ]]; then
-  # Produce the website
-
+produce() {
   # Change to the project directory
   cd "$PROJECT_NAME"
 
@@ -23,10 +21,9 @@ if [[ "$1" == "produce" ]]; then
     echo "Failed to create the $SITE_ARCHIVE archive."
     exit 1
   fi
+}
 
-elif [[ "$1" == "serve" ]]; then
-  # Serve the website
-
+serve() {
   # Extract the site.tar.gz file to a temporary directory
   mkdir -p "$TEMP_DIR"
   tar -xzvf "$SITE_ARCHIVE" --directory "$TEMP_DIR"
@@ -50,7 +47,12 @@ elif [[ "$1" == "serve" ]]; then
     echo "Failed to serve the website."
     exit 1
   fi
+}
 
+if [[ "$1" == "produce" ]]; then
+  produce
+elif [[ "$1" == "serve" ]]; then
+  serve
 else
   echo "Incorrect Parameter"
   exit 1
