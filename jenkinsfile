@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        git ''
+        git 'https://github.com/your-github-repo.git'
         sh 'docker build -t your-docker-image-name .'
       }
     }
